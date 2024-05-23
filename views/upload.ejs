@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multiple Image Upload</title>
+    <style>
+      .image-container {
+        display: flex;
+        flex-wrap: wrap;
+      }
+      .image-item {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Multiple Image Upload</h1>
+
+    <!-- Form to upload multiple images -->
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+      <input type="file" name="images" multiple />
+      <button type="submit">Upload</button>
+    </form>
+
+    <!-- Remove All button -->
+    <form action="/removeAll" method="POST" style="margin-top: 10px">
+      <button type="submit">Remove All Images</button>
+    </form>
+
+    <!-- Display uploaded image previews -->
+    <% if (imageUrls.length > 0) { %>
+    <h2>Uploaded Image Previews:</h2>
+    <div class="image-container">
+      <% imageUrls.forEach(imageUrl => { %>
+      <div class="image-item">
+        <img
+          src="<%= imageUrl %>"
+          alt="Uploaded Image"
+          style="width: 250px; height: 200px; margin-bottom: 10px"
+        />
+        <form action="/remove" method="POST">
+          <input type="hidden" name="imageUrl" value="<%= imageUrl %>" />
+          <button type="submit">Remove</button>
+        </form>
+      </div>
+      <% }); %>
+    </div>
+    <% } %>
+  </body>
+</html>
